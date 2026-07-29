@@ -1,4 +1,4 @@
-# TSP Brute Force Algoritması
+# Brute Force Algoritması -TSP
 
 Bu bölümde Gezgin Satıcı Probleminin tüm olası rotaları deneyerek çözülmesini sağlayan Brute Force yöntemi açıklanmaktadır.
 
@@ -11,16 +11,30 @@ Kaba Kuvvet (Brute Force) algoritması, problemi çözmek için en sezgisel ve e
 * **Hangi durumda tercih edilir?** Şehir sayısının ($N$) çok az olduğu (örneğin $N \le 12$) küçük veri setlerinde veya diğer karmaşık algoritmaların ürettiği sonuçların doğruluğunu test etmek için bir "referans (baseline)" noktası oluşturulmak istendiğinde tercih edilir.
 * **Hangi durumda tercih edilmez?** Faktöriyel büyüme oranına sahip olduğu için, şehir sayısı arttığında (örneğin $N > 15$) modern bilgisayarların bile hesaplaması yıllar süreceğinden büyük çaplı veri setlerinde ve gerçek zamanlı sistemlerde kesinlikle tercih edilmez.
 
-### Algoritmanın Çalışma Mantığı (Temel Fikir ve Prensip)
+### Algoritmanın Çalışma Mantığı 
 
-Algoritmanın çalışma prensibi, "mümkün olan tüm seçenekleri üret ve en iyisini seç" mantığına dayanır. Adım adım çalışma prensibi şu şekildedir:
-
-1. Sabit bir başlangıç şehri belirlenir.
-2. Başlangıç şehri dışındaki tüm şehirlerin olasılık dahilindeki bütün sıralamaları (permütasyonları) teker teker oluşturulur.
-3. Her bir permütasyon için, şehirlere sırasıyla uğranarak rotanın toplam mesafe maliyeti toplanır.
-4. Son şehre gelindiğinde, tekrar başlangıç şehrine dönmek için gereken mesafe de toplama eklenerek turun maliyeti tamamlanır.
-5. Her hesaplanan tur maliyeti, o ana kadar bulunmuş olan en düşük (minimum) tur maliyeti ile karşılaştırılır; daha küçükse güncellenir.
-6. Tüm permütasyonlar tükendiğinde, elde kalan minimum değer en iyi rotadır.
+Başlangıç şehri sabit tutulur. Başlangıç şehri dışındaki şehirlerin bütün olası sıralamaları oluşturulur.
+ 
+Her sıralama için:
+ 
+1. Başlangıç şehrinden yola çıkılır.
+2. Şehirler sıralamaya göre ziyaret edilir.
+3. Şehirler arasındaki maliyetler toplanır.
+4. Son şehirden başlangıç şehrine dönüş maliyeti eklenir.
+5. Hesaplanan değer mevcut minimum maliyetle karşılaştırılır.
+6. Daha düşük bir maliyet bulunursa minimum maliyet güncellenir.
+Örneğin şehirler `0, 1, 2, 3` ve başlangıç şehri `0` ise kontrol edilen rotalar şunlardır:
+ 
+```
+0 → 1 → 2 → 3 → 0
+0 → 1 → 3 → 2 → 0
+0 → 2 → 1 → 3 → 0
+0 → 2 → 3 → 1 → 0
+0 → 3 → 1 → 2 → 0
+0 → 3 → 2 → 1 → 0
+```
+ 
+Bütün rotaların maliyeti hesaplandıktan sonra en küçük maliyet sonuç olarak döndürülür.
 
 ### Sözde Kod (Pseudo-Code)
 
@@ -54,35 +68,6 @@ Fonksiyon TSP_BruteForce(Graf, BaslangicSehri):
 
 ```
 
-## 2. Algoritmanın Çalışma Mantığı
- 
-### Temel Fikir
- 
-Başlangıç şehri sabit tutulur. Başlangıç şehri dışındaki şehirlerin bütün olası sıralamaları oluşturulur.
- 
-Her sıralama için:
- 
-1. Başlangıç şehrinden yola çıkılır.
-2. Şehirler sıralamaya göre ziyaret edilir.
-3. Şehirler arasındaki maliyetler toplanır.
-4. Son şehirden başlangıç şehrine dönüş maliyeti eklenir.
-5. Hesaplanan değer mevcut minimum maliyetle karşılaştırılır.
-6. Daha düşük bir maliyet bulunursa minimum maliyet güncellenir.
-Örneğin şehirler `0, 1, 2, 3` ve başlangıç şehri `0` ise kontrol edilen rotalar şunlardır:
- 
-```
-0 → 1 → 2 → 3 → 0
-0 → 1 → 3 → 2 → 0
-0 → 2 → 1 → 3 → 0
-0 → 2 → 3 → 1 → 0
-0 → 3 → 1 → 2 → 0
-0 → 3 → 2 → 1 → 0
-```
- 
-Bütün rotaların maliyeti hesaplandıktan sonra en küçük maliyet sonuç olarak döndürülür.
- 
----
- 
 ### Kullanılan Veri Yapıları ve STL Özellikleri
  
 ### `vector<vector<int>>`
