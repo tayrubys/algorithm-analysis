@@ -3,7 +3,7 @@
 Bu bölümde Bin Packing probleminin, nesneleri sığabilecekleri ilk kutuya yerleştirerek çözülmesini sağlayan **First Fit** yöntemi açıklanmaktadır.
 
 ## Algoritmanın Geliştirilme Amacı
- 
+
 - **Bu algoritma neden geliştirilmiştir?** Bin Packing probleminde bütün olası yerleştirmeleri deneyerek kesin sonucu bulma zorunluluğunun yarattığı performans kaybını engellemek, bunun yerine nesneleri kutulara hızlı ve kolay bir şekilde yerleştirerek kabul edilebilir bir çözüm üretmek için geliştirilmiştir.
 - **Hangi eksikliği gidermektedir?** Bin Packing probleminde bütün olası yerleştirmeleri kontrol etmenin nesne sayısı arttıkça yarattığı büyük zaman kaybını giderir; bütün olasılıkları denemek yerine her nesneyi sığdığı ilk kutuya yerleştirerek daha kısa sürede sonuç üretir.
 - **Önceki yöntemlere göre avantajı nedir?** En büyük avantajı basitliğidir. Çalışma mantığı ve kodlanması oldukça kolaydır, karmaşık veri yapılarına ihtiyaç duymaz ve kesin çözüm yöntemlerine göre çok daha hızlı çalışır.
@@ -14,7 +14,6 @@ Bu bölümde Bin Packing probleminin, nesneleri sığabilecekleri ilk kutuya yer
   - Nesneler sisteme sırayla geldiği için çevrim içi (online) sistemlerde.
 - **Hangi durumda tercih edilmez?**
   - Minimum kutu sayısının kesin olarak bulunması gereken durumlarda (Örn: `weight = [6, 6, 6, 6, 6]`, kapasite `= 10`). First Fit nesnelerin geliş sırasından etkilendiği için bu durumda gereğinden fazla kutu kullanır ve algoritma optimum çözümden uzaklaşır.
-
 
 ## Algoritmanın Çalışma Mantığı
 
@@ -101,54 +100,13 @@ Fonksiyon FirstFit(Agirliklar, NesneSayisi, KutuKapasitesi):
 
 ## Kullanılan Veri Yapıları ve C++ Özellikleri
 
-### `const int weight[]`
+* **`const int weight[]`** — Nesnelerin ağırlıklarını saklar. `weight[i]`, `i` indeksindeki nesnenin ağırlığıdır. `const`, dizinin fonksiyon içinde değiştirilmesini engeller.
 
-Kutulara yerleştirilecek nesnelerin ağırlıklarını saklamak için kullanılır.
+* **`vector<int> binRemaining(n)`** — Her kutunun kalan kapasitesini tutar (`binRemaining[0]` → 1. kutu, `binRemaining[1]` → 2. kutu vb.). En kötü durumda her nesne ayrı bir kutu açabileceğinden boyutu `N` olarak alınır.
 
-```cpp
-weight[i]
-```
+* **`break`** — Nesne uygun bir kutuya yerleştirildiğinde kutuları kontrol eden döngüyü sonlandırır. First Fit ilk uygun kutuyu kullandığı için bulunduktan sonra diğer kutular kontrol edilmez.
 
-Bu ifade, `i` indeksindeki nesnenin ağırlığını gösterir.
-
-`const` ifadesi, ağırlık dizisinin fonksiyon içerisinde değiştirilmesini engeller.
-
-### `vector<int>`
-
-Kutuların kalan kapasitelerini saklamak için kullanılır.
-
-```cpp
-vector<int> binRemaining(n);
-```
-
-Vektörün her elemanı bir kutunun kalan kapasitesini gösterir.
-
-```text
-binRemaining[0] → Birinci kutunun kalan kapasitesi
-binRemaining[1] → İkinci kutunun kalan kapasitesi
-```
-
-En kötü durumda her nesne için ayrı bir kutu açılabileceği için vektörün boyutu `N` olarak oluşturulur.
-
-### `break`
-
-Nesne uygun bir kutuya yerleştirildiğinde kutuları kontrol eden döngüyü sonlandırmak için kullanılır.
-
-```cpp
-break;
-```
-
-First Fit algoritması nesneyi sığdığı ilk kutuya yerleştirdiği için uygun kutu bulunduktan sonra diğer kutular kontrol edilmez.
-
-### `sizeof`
-
-Ana programda ağırlık dizisinin eleman sayısını hesaplamak için kullanılır.
-
-```cpp
-int n = sizeof(weight) / sizeof(weight[0]);
-```
-
-`sizeof(weight)` dizinin toplam boyutunu, `sizeof(weight[0])` ise dizinin bir elemanının boyutunu verir. Bu değerler bölünerek nesne sayısı bulunur.
+* **`sizeof`** — Ana programda nesne sayısını bulmak için kullanılır: `int n = sizeof(weight) / sizeof(weight[0]);`
 
 ---
 
@@ -292,4 +250,4 @@ Bu nedenle algoritmanın ek alan karmaşıklığı:
 O(N)
 ```
 
-olur. 
+olur.
