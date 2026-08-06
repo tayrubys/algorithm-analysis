@@ -174,39 +174,53 @@ Fonksiyon solveSudoku(mat):
 
 ## Zaman Karmaşıklığı
 
-`solveSudokuRec` fonksiyonu, boş her hücre için `1`'den `9`'a kadar (`n` adet) sayı dener:
+`solveSudokuRec` fonksiyonu, her boş hücre için `1`'den `9`'a kadar (`n` adet) sayıyı sırayla dener:
 
 ```cpp
 for (int num = 1; num <= n; num++)
 ```
 
-ve her sayı denemesinde `isSafe` fonksiyonu çağrılır. `isSafe`, satır kontrolü (`O(N)`), sütun kontrolü (`O(N)`) ve `3×3` kutu kontrolü (`O(1)`, sabit `9` hücre) içerdiği için toplamda `O(N)` sürede çalışır (`N = 9`, tahta boyutu).
+Her sayı denemesinde `isSafe` fonksiyonu çağrılır. `isSafe`, satır kontrolü (`O(N)`), sütun kontrolü (`O(N)`) ve `3 × 3` kutu kontrolü (`O(1)`) yaptığı için toplam çalışma süresi `O(N)`'dir.
 
-Backtracking olmadan, kaba kuvvetle bütün olasılıkları denemek boş hücre sayısı `k` için `O(9^k)` sürede çalışırdı. `isSafe` kontrolü her adımda geçersiz dalları erken budadığı için, arama uzayı pratikte önemli ölçüde daralır; ancak teorik en kötü durum üst sınırı değişmez.
+Backtracking sayesinde geçersiz yerleşimler erken tespit edilir ve bu dallar daha fazla araştırılmadan terk edilir (pruning). Bu durum pratikte algoritmayı oldukça hızlandırsa da teorik en kötü durum zaman karmaşıklığını değiştirmez.
 
-### Best Case — O(N³)
+### Best Case — O(N²)
 
-En iyi durumda, bulmaca zaten neredeyse tamamen doludur ve az sayıda boş hücre kalmıştır; her boş hücrede denenen ilk sayı doğrudan geçerli çıkar ve hiç geri alma yapılmadan çözüme ulaşılır. Bu durumda tüm hücreler (`N × N` adet) bir kez ziyaret edilir ve her hücrede `isSafe` `O(N)` sürede çalışır. Bu nedenle en iyi durum zaman karmaşıklığı yaklaşık olarak:
+En iyi durumda Sudoku zaten çözülmüş ya da çok az boş hücre içeriyordur. Algoritma hücreleri yalnızca bir kez dolaşır ve neredeyse hiç geri alma (backtracking) işlemi yapmaz. Dolu hücrelerde `isSafe` fonksiyonu çağrılmadan doğrudan bir sonraki hücreye geçilir.
+
+Bu nedenle en iyi durum zaman karmaşıklığı:
 
 ```text
-O(N² × N) = O(N³)
+O(N²)
 ```
 
-olur (`N = 9` için sabit bir değere karşılık gelir).
+şeklindedir.
 
 ### Average Case — Üstel (Exponential)
 
-Ortalama durumda, algoritma bazı hücrelerde geçersiz denemelerle karşılaşır ve geri alma yaparak farklı sayıları dener. Denenen dal sayısı, bulmacanın başlangıçtaki doluluk oranına ve ipucu dağılımına bağlıdır. Bu nedenle ortalama durum karmaşıklığı, en kötü durumdan çok daha iyi olsa da genel olarak üstel mertebede kabul edilir.
+Ortalama durumda algoritma bazı hücrelerde yanlış seçimler yapar ve geri alma (backtracking) işlemi gerçekleştirir. Çalışma süresi bulmacadaki boş hücre sayısına ve başlangıç yerleşimine bağlıdır. Bu nedenle ortalama durum için kesin bir Big-O değeri vermek mümkün değildir; ancak genel olarak üstel (exponential) davranış gösterdiği kabul edilir.
 
-### Worst Case — O(9^(N×N))
+### Worst Case — O(9^k)
 
-En kötü durumda (özellikle bulmacanın neredeyse tamamen boş olduğu durumlarda), algoritma her boş hücre için `9` olasılığı deneyebilir ve arama ağacının büyük bir kısmını gezmek zorunda kalır. Klasik backtracking tabanlı Sudoku çözücünün en kötü durum zaman karmaşıklığı, literatürde yaklaşık olarak:
+En kötü durumda algoritma, her boş hücre için `9` farklı sayıyı denemek zorunda kalabilir.
+
+Boş hücre sayısı `k` ise en kötü durum zaman karmaşıklığı:
 
 ```text
-O(9^(N × N))
+O(9^k)
 ```
 
-şeklinde kabul edilir (`N × N`, tahtadaki toplam hücre sayısıdır). Bu, `isSafe` ile yapılan erken budama sayesinde pratikte çok daha hızlı çalışır; ancak teorik üst sınır bu şekildedir.
+şeklindedir.
+
+Standart `9 × 9` Sudoku'da en fazla `81` hücre boş olabileceğinden (`k = N²`), bu ifade en kötü durumda:
+
+```text
+O(9^(N²))
+```
+
+olarak da yazılabilir.
+
+Bu, backtracking tabanlı Sudoku çözücüsünün teorik üst sınırıdır. Gerçek uygulamalarda ise `isSafe` kontrolü sayesinde çok sayıda geçersiz dal erken elendiğinden algoritma çoğu Sudoku bulmacasını bu teorik sınırdan çok daha kısa sürede çözer.
 
 ---
 
