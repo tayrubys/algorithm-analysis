@@ -40,7 +40,7 @@ bool solveSudokuRec(vector<vector<int>> &mat, int row, int col){
     //hucre zaten doluysa bir sonraki hucreye gec
     if(mat[row][col] != 0)
         return solveSudokuRec(mat, row, col + 1);
-    
+    //tek tek deniyor
     for (int num = 1; num <= n; num++) {
         //sayiyi mevcut konuma yerlestirmek guvenliyse
         if(isSafe(mat, row, col, num)) {
