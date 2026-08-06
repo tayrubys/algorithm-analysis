@@ -172,7 +172,7 @@ O(N)
 
 olur.
 
-### Average Case — Üstel (Sub-factorial), Daha Düşük Sabit Çarpanla
+### Average Case — Exponential (Üstel), Daha Düşük Sabit Çarpanla
 
 Ortalama durumda, algoritma bazı satırlarda geri alma yapar; ancak her düğümdeki işlem maliyeti `O(1)`'e yakın olduğu için, klasik `O(N)` maliyetli `isSafe` kontrolüne kıyasla toplam işlem sayısı önemli ölçüde azalır. Arama ağacının şekli (kaç düğüm gezildiği) klasik yöntemle aynı kalır; fark, düğüm başına harcanan sürededir.
 
@@ -213,3 +213,8 @@ O(N²)
 ```
 
 olur.
+
+Not: Bu implementasyonda çözümün yazdırılabilmesi için `board[N][N]`
+dizisi kullanıldığından toplam alan karmaşıklığı O(N²)'dir.
+Eğer yalnızca bitmask kullanılarak çözüm aranıp tahta tutulmasaydı,
+alan karmaşıklığı O(N) olabilirdi.
