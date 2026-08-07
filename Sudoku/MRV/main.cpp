@@ -4,19 +4,16 @@ using namespace std;
 
 //sayiyi yerlestirmek guvenli mi
 bool isSafe(vector<vector<int>> &mat, int row, int col, int num) {
-
     //satir kontrolu
     for (int x = 0; x < 9; x++) {
         if (mat[row][x] == num)
             return false;
     }
-
     //sutun kontrolu
     for (int x = 0; x < 9; x++) {
         if (mat[x][col] == num)
             return false;
     }
-
     // 3x3 kutu kontrolu
     int startRow = row - row % 3;
     int startCol = col - col % 3;
@@ -29,7 +26,6 @@ bool isSafe(vector<vector<int>> &mat, int row, int col, int num) {
     }
     return true;
 }
-
 //mrv:en az secenegi olan bos hucreyi bul
 bool findMRVCell(vector<vector<int>> &mat, int &bestRow, int &bestCol) {
     int minChoices = 10; // En fazla 9 seçenek olabilir
@@ -39,7 +35,7 @@ bool findMRVCell(vector<vector<int>> &mat, int &bestRow, int &bestCol) {
         for (int col = 0; col < 9; col++) {
             if (mat[row][col] == 0) {
                 int choices = 0;
-                //bu hucreye ka sayi yerlesebilir?
+                //bu hucreye kac sayi yerlesebilir?
                 for (int num = 1; num <= 9; num++) {
                     if (isSafe(mat, row, col, num))
                         choices++;
@@ -50,7 +46,7 @@ bool findMRVCell(vector<vector<int>> &mat, int &bestRow, int &bestCol) {
                     bestRow = row;
                     bestCol = col;
                     found = true;
-                    // Daha iyisi olamaz
+                    //daha iyisi olamaz
                     if (minChoices == 0 ||minChoices == 1)
                         return true;
                 }
@@ -59,7 +55,6 @@ bool findMRVCell(vector<vector<int>> &mat, int &bestRow, int &bestCol) {
     }
     return found;
 }
-
 bool solveSudoku(vector<vector<int>> &mat) {
     int row, col;
     //bos hucre kalmadiysa cozum bulundu
