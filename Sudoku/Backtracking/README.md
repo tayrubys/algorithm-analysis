@@ -1,4 +1,4 @@
-# Backtracking Algoritması — Sudoku Çözücü
+# Backtracking Algoritması — Sudoku Problemi
 
 Bu bölümde Sudoku bulmacasının, boş hücreleri sırayla dolaşıp her sayı denemesinin geçerliliğini kontrol ederek, geçersiz bir duruma düşüldüğünde bir önceki adıma geri dönerek (**backtracking**) çözülmesini sağlayan yöntem açıklanmaktadır.
 
