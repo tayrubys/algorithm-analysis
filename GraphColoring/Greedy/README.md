@@ -1,4 +1,4 @@
-# Greedy Graph Coloring Algoritması
+# Greedy Algoritması - Graph Coloring
 
 Bu bölümde Graf Boyama (Graph Coloring) probleminin, düğümleri sırayla ele alıp her düğüme kullanılabilecek en küçük numaralı rengi atayarak çözülmesini sağlayan **Greedy (Açgözlü) Graph Coloring** yöntemi açıklanmaktadır.
 
