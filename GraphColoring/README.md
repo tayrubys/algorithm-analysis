@@ -50,11 +50,3 @@ Tüm kombinasyonları tek tek deneyerek (Brute Force) veya geri izleme (Backtrac
 
 **Hangi durumda tercih edilmez?** Minimum renk sayısının (kromatik sayının) kesin olarak garanti edilmesi gerektiği durumlarda tercih edilmez; DSATUR da Greedy gibi bir sezgisel (heuristic) yöntemdir ve optimum sonucu garanti etmez. Ayrıca çok küçük graflarda, ek doygunluk derecesi hesaplamalarının getirdiği ekstra zaman maliyeti (her adımda `O(V²)`) Greedy'nin basitliğine değmeyebilir.
 
----
-
-## Alt Algoritmalar
-
-Bu problemin çözümü için kullanılan algoritmaların detaylı açıklamaları, çalışma mantıkları, sözde kodları ve karmaşıklık analizleri için ilgili alt README dosyalarına bakınız:
-
-- **Greedy Graph Coloring** — bkz. `greedy/README.md`
-- **DSATUR Graph Coloring** — bkz. `dsatur/README.md`
