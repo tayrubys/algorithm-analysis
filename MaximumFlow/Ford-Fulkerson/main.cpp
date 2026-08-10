@@ -1,5 +1,5 @@
 #include <iostream>
-#include <limits.h>
+#include <climits>
 #include <string.h>
 #include <queue>
 #include <algorithm>
