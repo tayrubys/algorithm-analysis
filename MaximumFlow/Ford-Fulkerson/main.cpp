@@ -1,41 +1,36 @@
 #include <iostream>
 #include <climits>
-#include <string.h>
-#include <queue>
+#include <cstring>
 #include <algorithm>
 using namespace std;
 
 #define V 6 //grafin dugum sayisi
 
-//bfs kullanarak kaynak ile hedef arasinda yol arar
-bool bfs(int rGraph[V][V], int s, int t, int parent[])
+//dfs kullanarak kaynak ile hedef arasinda yol arar
+bool dfs(int rGraph[V][V], int u, int t, int parent[], bool visited[])
 {
-    bool visited[V];//ziyaret edilen dugumleri tutar
-    memset(visited, 0, sizeof(visited));//baslangicta tum dugumler ziyaret edilmemis kabul edilir
-    queue<int> q;//bfs icin
+    visited[u] = true;//mevcut dugumu ziyaret edildi olarak isaretler
 
-    q.push(s);//kaynak dugum kuyruga eklenir
-    visited[s] = true;
-    parent[s] = -1;//kaynak dugumden bir onceki dugum yoktur
-    //kuyruk bos olmadigi surece bfs devam eder
-    while (!q.empty())
+    //hedefe ulastiysa yol bulundu, true döndür
+    if (u == t)
+        return true;
+
+    //u dugumunden gidilebilecek diger tum dugumlere bak
+    for (int v = 0; v < V; v++)
     {
-        //kuyrugun basindaki dugum alinir
-        int u = q.front();
-        q.pop();
-        //u dugumunden diger tum dugumlere bakilir
-        for (int v = 0; v < V; v++)
-        {   //v dugumu daha once ziyaret edilmemisse ve kapasitesi varsa ziyaret edilir 
-            if (visited[v] == false && rGraph[u][v] > 0)
+        //v dugumu ziyaret edilmemisse ve aradaki kenarda bos kapasite varsa
+        if (!visited[v] && rGraph[u][v] > 0)
+        {
+            parent[v] = u; //yolu kaydet
+            //v dugum uzerinden hedefe giden bir yol var mi diye daha derine in
+            if (dfs(rGraph, v, t, parent, visited))
             {
-                q.push(v);
-                parent[v] = u;//v dugumune u uzerinden ulasildigi kaydedilir
-                visited[v] = true;
+                return true;
             }
         }
     }
-    //heef dugume ulasildiysa t , ulasilmadiysa f
-    return (visited[t] == true);
+    //hicbir yoldan hedefe ulasilamadiysa false dondur
+    return false;
 }
 
 //ford-fulkerson algoritmasini uygular
@@ -55,21 +50,30 @@ int fordFulkerson(int graph[V][V], int s, int t)
         }
     }
 
-    //bulunan yolun dugumlerini tutar(bfs tarafindan)
+    //bulunan yolun dugumlerini tutar (dfs tarafindan doldurulacak)
     int parent[V];
 
     int max_flow = 0;//baslangictaki toplam akis
+    bool visited[V];//ziyaret dizisi
 
     //kaynaktan hedefe yol oldugu surece devam et
-    while (bfs(rGraph, s, t, parent))
+    while (true)
     {
+        //dfsher calistiginda ziyaret edilenler listesini sifirlamamiz gerekir
+        memset(visited, 0, sizeof(visited));
+        
+        //eger dfs bir yol bulamazsa islemi bitir
+        if (!dfs(rGraph, s, t, parent, visited))
+        {
+            break;
+        }
+
         //bulunan yol uzerindeki min kapasiteyi bulmak icin buyuk deger atanir
         int path_flow = INT_MAX;
 
         for (v = t; v != s; v = parent[v])
         {
             u = parent[v];
-
             path_flow = min(path_flow, rGraph[u][v]);//yol uzerinde en kucuk kapasite bulunur
         }
 
@@ -80,7 +84,6 @@ int fordFulkerson(int graph[V][V], int s, int t)
 
             //ileri yöndeki kapasiteyi azaltilir
             rGraph[u][v] -= path_flow;
-
             //geri yondeki kapasiteyi artilir(daha sonra gonderilen akisin geri alinmasina izin verilir)
             rGraph[v][u] += path_flow;
         }
@@ -103,6 +106,6 @@ int main()
         {0, 0, 7, 4, 0, 0},
         {0, 0, 0, 0, 0, 0}
     };
-    cout << "Max Flow: "<< fordFulkerson(graph, 0, 5)<< endl;
+    cout << "Max Flow: " << fordFulkerson(graph, 0, 5) << endl;
     return 0;
 }
