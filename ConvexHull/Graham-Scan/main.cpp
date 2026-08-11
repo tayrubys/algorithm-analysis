@@ -4,10 +4,6 @@ using namespace std;
 //noktanin x ve y koordinatlarini tutan yapi
 struct Point {
     double x, y;
-    //iki noktanin esit olup olmadigini kontrol eder
-    bool operator==(const Point& t) const {
-        return x == t.x && y == t.y;
-    }
 };
 
 // (a, b, c)yonunu bulur -1:saat yonu,1:saat yonunun tersi,0:ayni dogru uzerinde
@@ -66,7 +62,7 @@ vector<vector<int>> findConvexHull(vector<vector<int>> points) {
 
         //son iki nokta ile mevcut nokta saat yönünde veya aynı doğru üzerindeyse ortadaki noktayı cikar
         while (st.size() > 1 &&
-               orientation(st[st.size() - 2], st.back(), a[i]) >= 0) {
+               orientation(st[st.size() - 2], st.back(), a[i]) >= 0) {//hull olusurken gereksiz noktayi bulur
             st.pop_back();
         }
 
