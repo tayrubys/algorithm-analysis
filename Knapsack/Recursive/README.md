@@ -1,4 +1,4 @@
-# Recursive Çözüm - 0/1 Knapsack Problemi
+# Recursive Algoritmasi - 0/1 Knapsack Problemi
 
 Bu bölümde, 0/1 Knapsack probleminin, her eşya için "al" veya "alma" kararının özyineleme (recursion) ile denenmesine dayanan **saf özyinelemeli (brute-force recursive)** çözümü açıklanmaktadır.
 

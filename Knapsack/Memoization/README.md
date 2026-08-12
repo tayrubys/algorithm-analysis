@@ -1,4 +1,4 @@
-#  Memoization Çözümü - 0/1 Knapsack Problemi 
+#  Memoization Algoritmasi - 0/1 Knapsack Problemi 
 
 Bu bölümde, 0/1 Knapsack probleminin, saf özyinelemeli çözümdeki tekrar hesaplamaları önlemek için bir **memoization (hafızaya alma) tablosu** kullanılarak çözülmesini sağlayan yöntem açıklanmaktadır.
 

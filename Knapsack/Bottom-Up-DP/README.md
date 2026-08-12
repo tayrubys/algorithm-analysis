@@ -1,4 +1,4 @@
-# Bottom-Up DP Çözümü - 0/1 Knapsack Problemi
+# Bottom-Up DP Algoritmasi - 0/1 Knapsack Problemi
 
 Bu bölümde, 0/1 Knapsack probleminin, özyineleme kullanmadan, sonuçları küçük alt problemlerden başlayarak döngülerle bir tabloya doldurmaya dayanan **bottom-up (tabulation) dinamik programlama** çözümü açıklanmaktadır.
 
